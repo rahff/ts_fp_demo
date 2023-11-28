@@ -6,6 +6,6 @@ import {useCaseFactory} from "../core/useCase.js";
 
 
 const router = Router();
-router.get('', controller_factory(useCaseFactory(secondaryAdapter, computation)));
+router.get("*", controller_factory(useCaseFactory(secondaryAdapter, computation)));
 
 export default router

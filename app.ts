@@ -4,7 +4,7 @@ import router from "./routes/index.js";
 
 export const app: Application = express();
 
-app.get("/", router)
+app.get("*", router)
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: false }));
