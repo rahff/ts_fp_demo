@@ -12,7 +12,6 @@ export type MoneyTransferRequest = {customerAccountId: string, destinationAccoun
 export const transferMoneyController = (pipeline: TransfertMoneyPipeline): Controller => {
     return async (req: Request, res: Response) => {
         const request: MoneyTransferRequest = {...req.body};
-        console.log(request)
         const result = await pipeline(transferMoney, request);
         if(matchOk(result)) return res.status(201).json({result: result.tag})
         else return res.status(403).json({reject: result.value});
