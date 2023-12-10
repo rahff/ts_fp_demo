@@ -1,11 +1,17 @@
 import { Router} from "express";
-import {controller_factory} from "../controller/main_controller.js";
-import {computation} from "../core/computation.js";
-import {secondaryAdapter} from "../adapters/adapter.js";
-import {useCaseFactory} from "../core/useCase.js";
+import {transferMoneyController} from "../controller/transferMoneyController.js";
+import {createTransaction, getAccountState, saveTransaction} from "../adapters/transactionIO.js";
+import {TransferMoneyDependencies, transferMoneyWorkflow} from "../application/TransferMoneyWorkflow.js";
 
 
 const router = Router();
-router.get("*", controller_factory(useCaseFactory(secondaryAdapter, computation)));
 
-export default router
+const transferMoneyDependencies: TransferMoneyDependencies = {
+    saveTransaction,
+    createTransaction,
+    getAccountState
+}
+// DEPENDENCY INJECTION
+router.post("/transfer-money", transferMoneyController(transferMoneyWorkflow(transferMoneyDependencies)));
+
+export default router;
