@@ -13,6 +13,8 @@ const transferMoneyDependencies: TransferMoneyDependencies = {
     getAccountState
 }
 // DEPENDENCY INJECTION
-router.post("/transfer-money", transferMoneyController(transferMoneyWorkflow(transferMoneyDependencies), transferMoney));
+router.post("/transfer-money", transferMoneyController(
+    transferMoneyWorkflow(transferMoneyDependencies),
+    transferMoney));
 
 export default router;
