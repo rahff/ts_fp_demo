@@ -21,7 +21,7 @@ export const transferMoneyWorkflow: TransferMoneyWorkflow = (_: TransferMoneyDep
         return result; // RETURN TO CONTROLLER
     }
 }
-const makeTransferMoneyCommand = async (_: TransferMoneyDependencies, request: MoneyTransferRequest) => {
+const makeTransferMoneyCommand = async (_: TransferMoneyDependencies, request: MoneyTransferRequest): Promise<TransferMoneyCommand> => {
     const transactionId = await _.createTransaction();
     const accountState = await _.getAccountState(request.customerAccountId);
    return  {

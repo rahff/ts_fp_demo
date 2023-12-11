@@ -1,5 +1,5 @@
 import {Request, Response} from "express";
-import {transferMoney} from "../core/transferMoney.js";
+import {TransferMoney} from "../core/transferMoney.js";
 import {TransfertMoneyPipeline} from "../application/TransferMoneyWorkflow.js";
 import {matchOk} from "../lib/types.js";
 
@@ -9,7 +9,7 @@ type Controller = (req: Request, res: Response) => void;
 export type MoneyTransferRequest = {customerAccountId: string, destinationAccountId: string, amount: number};
 
 //CREATE CONTROLLER WITH USE CASE PIPELINE
-export const transferMoneyController = (pipeline: TransfertMoneyPipeline): Controller => {
+export const transferMoneyController = (pipeline: TransfertMoneyPipeline, transferMoney: TransferMoney): Controller => {
     return async (req: Request, res: Response) => {
         const request: MoneyTransferRequest = {...req.body};
         const result = await pipeline(transferMoney, request);
