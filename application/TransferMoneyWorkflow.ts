@@ -9,12 +9,12 @@ export type TransferMoneyDependencies = {
     saveTransaction: SaveTransaction,
     createTransaction: CreateTransaction
 }
-export type TransferMoneyWorkflow = (_: TransferMoneyDependencies) => TransfertMoneyPipeline
+export type TransfertMoneyPipeline = (request: MoneyTransferRequest) => Promise<TransfertMoneyResult>
 
-export type TransfertMoneyPipeline = (commandHandler: TransferMoney, request: MoneyTransferRequest) => Promise<TransfertMoneyResult>
+export type TransferMoneyWorkflow = (_: TransferMoneyDependencies, commandHandler: TransferMoney) => TransfertMoneyPipeline
 // IMPERATIVE SHELL
-export const transferMoneyWorkflow: TransferMoneyWorkflow = (_: TransferMoneyDependencies): TransfertMoneyPipeline => {
-    return async (commandHandler: TransferMoney, request: MoneyTransferRequest): Promise<TransfertMoneyResult> => {
+export const transferMoneyWorkflow: TransferMoneyWorkflow = (_: TransferMoneyDependencies, commandHandler: TransferMoney,): TransfertMoneyPipeline => {
+    return async (request: MoneyTransferRequest): Promise<TransfertMoneyResult> => {
         const command: TransferMoneyCommand = await makeTransferMoneyCommand(_, request); //IO GET STATE
         const result: TransfertMoneyResult = commandHandler(command); // PURE CORE_LOGIC MAKE DECISION
         if(matchOk(result)) await saveTransaction(result.value); // SIDE_EFFECT

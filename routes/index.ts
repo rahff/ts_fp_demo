@@ -15,8 +15,7 @@ const transferMoneyDependencies: TransferMoneyDependencies = {
 // DEPENDENCY INJECTION
 router.post("/transfer-money",
     transferMoneyController(
-        transferMoneyWorkflow(transferMoneyDependencies),
-        transferMoney
+        transferMoneyWorkflow(transferMoneyDependencies, transferMoney)
     )
 );
 
