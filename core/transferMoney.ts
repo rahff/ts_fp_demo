@@ -4,7 +4,6 @@ import {err, ok} from "../lib/types.js";
 
 export type ApproveTransaction = (command: TransferMoneyCommand) => TransfertMoneyResult
 
-// HIGH ALGORITHMIC COMPLEXITY
 export const approve_transaction: ApproveTransaction =
     (command: TransferMoneyCommand): TransfertMoneyResult => {
     const {balance} = command.accountState;

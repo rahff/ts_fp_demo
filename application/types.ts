@@ -1,7 +1,7 @@
 import {CreateTransaction, GetAccountState, SaveTransaction} from "../adapters/transactionIO.js";
 import {MoneyTransferRequest} from "../controller/transferMoneyController.js";
 import {TransfertMoneyResult} from "../core/model.js";
-import {TransferMoney} from "../core/transferMoney.js";
+import {ApproveTransaction} from "../core/transferMoney.js";
 
 export type TransferMoneyDependencies = {
     getAccountState: GetAccountState,
@@ -10,4 +10,4 @@ export type TransferMoneyDependencies = {
 }
 export type TransfertMoneyPipeline = (request: MoneyTransferRequest) => Promise<TransfertMoneyResult>
 
-export type TransferMoneyWorkflow = (_: TransferMoneyDependencies, commandHandler: TransferMoney) => TransfertMoneyPipeline
+export type TransferMoneyWorkflow = (_: TransferMoneyDependencies, commandHandler: ApproveTransaction) => TransfertMoneyPipeline

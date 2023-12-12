@@ -13,7 +13,7 @@ const transferMoneyDependencies: TransferMoneyDependencies = {
     createTransaction,
     getAccountState
 }
-// DEPENDENCY INJECTION
+
 router.post("/transfer-money",
     transferMoneyController(
         transferMoneyWorkflow(transferMoneyDependencies, approve_transaction)

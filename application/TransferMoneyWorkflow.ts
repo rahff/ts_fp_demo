@@ -5,14 +5,13 @@ import {matchOk} from "../lib/types.js";
 import {TransferMoneyDependencies, TransferMoneyWorkflow, TransfertMoneyPipeline} from "./types.js";
 
 
-// IMPERATIVE SHELL
 export const transferMoneyWorkflow: TransferMoneyWorkflow =
     (_: TransferMoneyDependencies, commandHandler: ApproveTransaction): TransfertMoneyPipeline => {
     return async (request: MoneyTransferRequest): Promise<TransfertMoneyResult> => {
-        const command: TransferMoneyCommand = await makeTransferMoneyCommand(_, request); //IO GET STATE
-        const result: TransfertMoneyResult = commandHandler(command); // PURE CORE_LOGIC MAKE DECISION
-        if(matchOk(result)) await _.saveTransaction(result.value); // SIDE_EFFECT
-        return result; // RETURN TO CONTROLLER
+        const command: TransferMoneyCommand = await makeTransferMoneyCommand(_, request);
+        const result: TransfertMoneyResult = commandHandler(command);
+        if(matchOk(result)) await _.saveTransaction(result.value);
+        return result;
     }
 }
 const makeTransferMoneyCommand =
