@@ -1,8 +1,9 @@
 import { Router} from "express";
 import {transferMoneyController} from "../controller/transferMoneyController.js";
 import {createTransaction, getAccountState, saveTransaction} from "../adapters/transactionIO.js";
-import {TransferMoneyDependencies, transferMoneyWorkflow} from "../application/TransferMoneyWorkflow.js";
-import {transferMoney} from "../core/transferMoney.js";
+import {transferMoneyWorkflow} from "../application/TransferMoneyWorkflow.js";
+import {approve_transaction} from "../core/transferMoney.js";
+import {TransferMoneyDependencies} from "../application/types.js";
 
 
 const router = Router();
@@ -15,7 +16,7 @@ const transferMoneyDependencies: TransferMoneyDependencies = {
 // DEPENDENCY INJECTION
 router.post("/transfer-money",
     transferMoneyController(
-        transferMoneyWorkflow(transferMoneyDependencies, transferMoney)
+        transferMoneyWorkflow(transferMoneyDependencies, approve_transaction)
     )
 );
 

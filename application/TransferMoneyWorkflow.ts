@@ -1,4 +1,4 @@
-import {TransferMoney} from "../core/transferMoney.js";
+import {ApproveTransaction} from "../core/transferMoney.js";
 import {TransferMoneyCommand, TransfertMoneyResult} from "../core/model.js";
 import {MoneyTransferRequest} from "../controller/transferMoneyController.js";
 import {matchOk} from "../lib/types.js";
@@ -6,7 +6,8 @@ import {TransferMoneyDependencies, TransferMoneyWorkflow, TransfertMoneyPipeline
 
 
 // IMPERATIVE SHELL
-export const transferMoneyWorkflow: TransferMoneyWorkflow = (_: TransferMoneyDependencies, commandHandler: TransferMoney,): TransfertMoneyPipeline => {
+export const transferMoneyWorkflow: TransferMoneyWorkflow =
+    (_: TransferMoneyDependencies, commandHandler: ApproveTransaction): TransfertMoneyPipeline => {
     return async (request: MoneyTransferRequest): Promise<TransfertMoneyResult> => {
         const command: TransferMoneyCommand = await makeTransferMoneyCommand(_, request); //IO GET STATE
         const result: TransfertMoneyResult = commandHandler(command); // PURE CORE_LOGIC MAKE DECISION
@@ -14,7 +15,8 @@ export const transferMoneyWorkflow: TransferMoneyWorkflow = (_: TransferMoneyDep
         return result; // RETURN TO CONTROLLER
     }
 }
-const makeTransferMoneyCommand = async (_: TransferMoneyDependencies, request: MoneyTransferRequest): Promise<TransferMoneyCommand> => {
+const makeTransferMoneyCommand =
+    async (_: TransferMoneyDependencies, request: MoneyTransferRequest): Promise<TransferMoneyCommand> => {
     const transactionId = await _.createTransaction();
     const accountState = await _.getAccountState(request.customerAccountId);
    return  {

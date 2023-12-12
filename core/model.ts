@@ -13,15 +13,15 @@ export type TransferMoneyCommand = {
     toAccount: string
 }
 
-export const transactionAccepted = (transactionId: string,
+export const transactionApproved = (transactionId: string,
                                     debitedAccountId: string,
                                     creditedAccountId: string,
-                                    amount: number): TransactionAccepted => (
+                                    amount: number): TransactionApproved => (
                                         {transactionId, debitedAccountId, creditedAccountId, amount}
                                     )
 export const transactionRejected = (reason: string): TransactionRejected => ({reason})
 
-export type TransactionAccepted = {
+export type TransactionApproved = {
     transactionId: string,
     debitedAccountId: string,
     creditedAccountId: string,
@@ -33,4 +33,4 @@ export type TransactionRejected = {
     reason: string
 }
 
-export type TransfertMoneyResult = Result<TransactionAccepted, TransactionRejected>
+export type TransfertMoneyResult = Result<TransactionApproved, TransactionRejected>
