@@ -1,5 +1,5 @@
-import {AccountState, TransactionAccepted} from "../core/model.js";
 import * as crypto from "crypto";
+import { AccountState, TransactionApproved } from "../core/model.js";
 
 export type GetAccountState = (accountId: string) => Promise<AccountState>;
 export const getAccountState: GetAccountState = async (accountId: string) => {
@@ -8,7 +8,7 @@ export const getAccountState: GetAccountState = async (accountId: string) => {
     })
 }
 
-export type SaveTransaction = (event: TransactionAccepted) => Promise<void>;
+export type SaveTransaction = (event: TransactionApproved) => Promise<void>;
 export const saveTransaction: SaveTransaction = async (event) => {
     return new Promise((resolve) => setTimeout(()=> resolve(), 10))
 }
