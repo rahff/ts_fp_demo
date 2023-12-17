@@ -15,7 +15,7 @@ export type MoneyTransferRequest = {
 
 export const transferMoneyController = (useCase: TransfertMoneyPipeline): Controller => {
     return async (req: Request, res: Response): Promise<void> => {
-        const request: MoneyTransferRequest = {...req.body}; // SKIP VALIDATION
+        const request: MoneyTransferRequest = {...req.body};
         const result: TransfertMoneyResult = await useCase(request);
         if(matchOk(result)) res.status(201).json({result: result.tag});
         else res.status(403).json({reject: result.value});

@@ -13,6 +13,12 @@ export type TransferMoneyCommand = {
     toAccount: string
 }
 
+export const transferMoneyCommand = (
+    transactionId: string,
+    accountState: AccountState,
+    amount: number,
+    toAccount: string): TransferMoneyCommand => ({transactionId, accountState, amount, toAccount})
+
 export const transactionApproved = (transactionId: string,
                                     debitedAccountId: string,
                                     creditedAccountId: string,

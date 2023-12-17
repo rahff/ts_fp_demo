@@ -1,5 +1,5 @@
 import {ApproveTransaction} from "../core/transferMoney.js";
-import {TransferMoneyCommand, TransfertMoneyResult} from "../core/model.js";
+import {transferMoneyCommand, TransferMoneyCommand, TransfertMoneyResult} from "../core/model.js";
 import {MoneyTransferRequest} from "../controller/transferMoneyController.js";
 import {matchOk} from "../lib/types.js";
 import {TransferMoneyDependencies, TransferMoneyWorkflow, TransfertMoneyPipeline} from "./types.js";
@@ -16,12 +16,15 @@ export const transferMoneyWorkflow: TransferMoneyWorkflow =
 }
 const makeTransferMoneyCommand =
     async (_: TransferMoneyDependencies, request: MoneyTransferRequest): Promise<TransferMoneyCommand> => {
-    const transactionId = await _.createTransaction();
-    const accountState = await _.getAccountState(request.customerAccountId);
-   return  {
+        const [transactionId, accountState]
+            = await Promise.all([
+            _.createTransaction(),
+            _.getAccountState(request.customerAccountId)
+        ]);
+   return transferMoneyCommand(
         transactionId,
         accountState,
-        amount: request.amount,
-        toAccount: request.destinationAccountId
-    };
+        request.amount,
+        request.destinationAccountId
+    );
 }
